@@ -2,26 +2,26 @@ import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
 import Menu from "../src/components/Menu";
+import { StyledTimeline } from "../src/components/Timeline";
 
 function HomePage() {
-    const estiloDaHome = { 
-        // backgroundColor: "red" 
-    };
+  const estiloDaHome = {
+    // backgroundColor: "red" 
+  };
 
-    // console.log(config.playlists);
+  // console.log(config.playlists);
 
-    return (
-        <>
-            <CSSReset />
-            <div style={estiloDaHome}>
-                {/* chamando os componentes */}
-                <Menu />
-                <Header />
-                <Timeline playlists={config.playlists} />
-            </div>
-        
-        </>
-    );
+  return (
+    <>
+      <CSSReset />
+      <div style={estiloDaHome}>
+        {/* chamando os componentes */}
+        <Menu />
+        <Header />
+        <Timeline playlists={config.playlists} />
+      </div>
+    </>
+  );
 }
 
 export default HomePage
@@ -44,6 +44,7 @@ const StyledHeader = styled.div`
     }
 
     .user-info {
+        margin-top: 50px;
         display: flex;
         align-items: center;
         width: 100%;
@@ -54,56 +55,54 @@ const StyledHeader = styled.div`
 
 // criando o componente Header
 function Header() {
-    return (
-        <StyledHeader>
-            {/* <img src="banner" /> */}
-
-            <section className="user-info">
-                <img src={`${config.github}`} />
-                <div>
-                    <h2>
-                        {config.name}
-                    </h2>
-                    <p>
-                        {config.job}
-                    </p>
-                </div>
-
-            </section>
-        </StyledHeader>
-    );
+  return (
+    <StyledHeader>
+      {/* <img src="banner" /> */}
+      <section className="user-info">
+        <img src={`${config.github}`} />
+        <div>
+          <h2>
+            {config.name}
+          </h2>
+          <p>
+            {config.job}
+          </p>
+        </div>
+      </section>
+    </StyledHeader>
+  );
 }
 
 // criando o componente Timeline
 function Timeline(props) {
-    // console.log("Dentro do componente", props.playlists);
-    const playlistNames = Object.keys(props.playlists);
-    // Statement
-    // Retorno por expressão
-    return (
-        <StyledTimeline>
-            {playlistNames.map((playlistName) => {
-                const videos = props.playlists[playlistName];
-                console.log(playlistName);
-                console.log(videos);
+  // console.log("Dentro do componente", props.playlists);
+  const playlistNames = Object.keys(props.playlists);
+  // Statement
+  // Retorno por expressão
+  return (
+    <StyledTimeline>      
+      {playlistNames.map((playlistName) => {
+        const videos = props.playlists[playlistName];
+        console.log(playlistName);
+        console.log(videos);
+        return (
+          <section>
+            <h2>{playlistName}</h2>
+            <div>
+              {videos.map((video) => {
                 return (
-                    <section>
-                        <h2>{playlistName}</h2>
-                        <div>
-                            {videos.map((video) => {
-                                return (
-                                    <a href={video.url}>
-                                        <img src={video.thumb} />
-                                        <span>
-                                            {video.title}
-                                        </span>
-                                    </a>
-                                )
-                            })}
-                        </div>
-                    </section>
+                  <a href={video.url}>
+                    <img src={video.thumb} />
+                    <span>
+                      {video.title}
+                    </span>
+                  </a>
                 )
-            })}
-        </StyledTimeline>
-    );
+              })}
+            </div>
+          </section>
+        )
+      })}
+    </StyledTimeline>
+  );
 }
